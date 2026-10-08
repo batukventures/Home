@@ -1,0 +1,131 @@
+/* ==========================================================
+   Aadi Batuk – Site Stylesheet
+   Sections: 1 Variables · 2 Base · 3 Navbar · 4 Content
+             5 Footer · 6 Mobile nav · 7 Accessibility
+   ========================================================== */
+
+/* ---------- 1. Variables ---------- */
+:root {
+  --nav-bg: #1f2a44;
+  --nav-text: #f5f7fb;
+  --nav-hover: #3a4a75;
+  --nav-active: #f2b84b;
+
+  --footer-bg: #222;
+  --footer-text: #fff;
+
+  --page-bg: #f5f7fb;
+  --card-bg: #fff;
+  --text: #1f2a44;
+
+  --nav-height: 60px;
+  --footer-height: 56px;
+}
+
+/* ---------- 2. Base ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: var(--text);
+  background: var(--page-bg);
+  padding-bottom: var(--footer-height); /* room for fixed footer */
+}
+
+/* ---------- 3. Navbar (desktop: fully expanded) ---------- */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 20px; height: var(--nav-height);
+  background: var(--nav-bg); color: var(--nav-text);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--nav-text);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; list-style: none; margin: 0; padding: 0; gap: 4px; }
+.nav-links a {
+  display: block; padding: 10px 16px; border-radius: 6px;
+  color: var(--nav-text); text-decoration: none;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible { background: var(--nav-hover); }
+.nav-links a.active { color: var(--nav-active); font-weight: 600; }
+
+.menu-btn, .overlay { display: none; }
+
+/* ---------- 4. Page content ---------- */
+.welcome-card,
+.page-content {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 32px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+  text-align: center;
+}
+.page-content { text-align: left; }
+
+.welcome-card h1,
+.page-content h1 { margin-top: 0; }
+
+.welcome-card a {
+  display: inline-block; margin-top: 8px; padding: 10px 20px;
+  border-radius: 6px; text-decoration: none;
+  background: var(--nav-bg); color: var(--nav-text);
+}
+.welcome-card a:hover,
+.welcome-card a:focus-visible { background: var(--nav-hover); }
+
+/* ---------- 5. Footer ---------- */
+.footer-content {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 1rem;
+  text-align: center;
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+}
+.footer-content p { margin: 0; }
+
+/* ---------- 6. Mobile / Android: folded menu, opens from the left ---------- */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block; order: -1;            /* button sits on the left */
+    background: none; border: 0; color: var(--nav-text);
+    font-size: 1.8rem; line-height: 1; padding: 6px 10px; cursor: pointer;
+  }
+  .nav-links {
+    position: fixed; top: 0; left: 0;     /* panel on the LEFT */
+    width: 260px; height: 100%;
+    flex-direction: column; gap: 0; padding: 70px 12px 12px;
+    background: var(--nav-bg);
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    z-index: 200;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { padding: 14px 16px; }
+
+  .overlay {
+    display: block; position: fixed; inset: 0;
+    background: rgba(0, 0, 0, .45); z-index: 150;
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .overlay.show { opacity: 1; pointer-events: auto; }
+
+  .welcome-card,
+  .page-content { margin: 20px 16px; padding: 24px; }
+}
+
+/* ---------- 7. Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .nav-links, .overlay { transition: none; }
+}
